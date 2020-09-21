@@ -28,6 +28,8 @@ class LifeGame:
         self.active_grid = 0 
         self.randomize_grid()
         print(self.grids[0])
+        #changes
+        
             
         # self.game_grid_active = [
         #     [0,0,0],
