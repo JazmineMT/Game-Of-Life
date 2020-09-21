@@ -1,7 +1,8 @@
 import sys
 import pygame
 import random
-
+import time 
+from datetime import datetime
 
 
 
@@ -24,10 +25,24 @@ class LifeGame:
         self.num_cols = int(WIDTH / CELL_SIZE)
         self.num_rows = int(HEIGHT / CELL_SIZE)
         print("Columns: %d \n Rows: %d" % (self.num_cols, self.num_rows))
-        self.grids = [ [[0] * self.num_rows] * self.num_cols,  [[0] * self.num_rows] * self.num_cols]
+       
+        self.grids = []
+        
+        rows = []
+        for row_num in range(self.num_rows):
+            list_of_colums = [0] * self.num_cols
+            rows.append(list_of_colums)
+        
+        
+        
+        
+        self.grids.append(rows)
         self.active_grid = 0 
-        self.randomize_grid()
+        
+        
+        self.set_grid()
         print(self.grids[0])
+        
         #changes
         
             
@@ -38,12 +53,26 @@ class LifeGame:
         # ]
         # self.game_grid_inactive= []
         
+    
         
-    def randomize_grid(self):
+    def set_grid(self):
         
-        for c in range(self.num_cols):
-            for r in range(self.num_rows):
-                self.grids[self.active_grid][c][r] = random.choice([0,1])
+        """
+        Examples
+        
+            #set_grid(0) all dead
+            #set_grid(1) all alive
+            #set_grid() random 
+            #set_grid(None) random
+            
+        """
+        for r in range(self.num_rows):
+            for c in range(self.num_cols):
+                # if value is None:
+                #     cell_value = random.choice([0,1])
+                # else:
+                #     cell_value = value 
+                self.grids[self.active_grid][r][c] = random.randint(0,1)
 
     def clear_screen(self):
         self.screen.fill(DEAD_COLOR)
@@ -52,9 +81,23 @@ class LifeGame:
         #inspect the current active generation 
         #update the inactive grid to store next generation 
         #swap the active grid 
-        pass
+        self.set_grid()
+    
     def draw_grid(self):
-        #circle_rect = pygame.draw.circle(self.screen, ALIVE_COLOR, (50,50), 5 , 0)
+        self.clear_screen()
+        for c in range(self.num_cols):
+            for r in range(self.num_rows):
+                if self.grids[self.active_grid][r][c] == 1:
+                    color = ALIVE_COLOR
+                elif self.grids[self.active_grid][r][c] == 0:
+                    color = DEAD_COLOR 
+                pygame.draw.circle(self.screen, 
+                                   color, 
+                                   (int(c * CELL_SIZE + (CELL_SIZE/2)),
+                                    int(r * CELL_SIZE + (CELL_SIZE/2))), 
+                                    int(CELL_SIZE/2) , 
+                                    0)
+        
         pygame.display.flip()
         
         
@@ -68,11 +111,20 @@ class LifeGame:
                 
                 
     def run(self):
+        milliseconds_betweeen_updates = (1.0/60.0) * 1000.0
         while True:
             self.handle_events()
             #time checking 
             self.update_generation()
             self.draw_grid()
+            
+            time.sleep(.5)
+            # now = pygame.time.get_ticks()
+            # print(now)
+            # if now - self.last_update_completed > milliseconds_betweeen_updates:
+            #     pygame.time.wait(milliseconds_betweeen_updates - (now = self.last_update_completed))
+            # self.last_update_completed = now
+            
         
         
             
