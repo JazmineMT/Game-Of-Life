@@ -15,16 +15,23 @@ const operations = [
   [-1, 1]
 ]
 
+const generateEmptyGrid = () => {
 
-const App: React.FC = () => {
-
-  const [grid , setGrid] = useState( () => {
-    const rows = [];
+  const rows = [];
   for( let i = 0; i < numRows; i++){
     rows.push(Array.from(Array(numCols), () => 0 ))
 
     }  
     return rows
+
+}
+
+
+const App: React.FC = () => {
+
+  const [grid , setGrid] = useState( () => {
+
+    return  generateEmptyGrid()
     })
     
   const [running , setRunning] = useState(false)
@@ -82,6 +89,22 @@ const App: React.FC = () => {
         runningRef.current = true
         runSimulation()
       }}> {running? "stop": "start" }</button>
+
+
+      <button onClick={() => {
+        setGrid(generateEmptyGrid)
+
+      }}> Clear</button>
+
+      <button onClick={() => {
+         const rows = [];
+         for( let i = 0; i < numRows; i++){
+           rows.push(Array.from(Array(numCols), () => Math.random() > .5 ? 1: 0))
+       
+           }  
+           setGrid(rows)
+       
+      }}> Random </button>
     
 
       <div style={{
