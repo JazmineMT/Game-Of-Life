@@ -5,6 +5,7 @@ import glider from './glider.gif'
 import column from './column.gif'
 import toad from './toad.gif'
 import './App.scss';
+import './header.css'
 
 
 const numRows = 25
@@ -217,10 +218,10 @@ function App(){
      
 
   return (
+    <>
     <Background>
-     <div className="head" >
-     <p> Conway's Game of Life </p>
-    </div> 
+
+      
     <Contaier>
     <div>
       <RulesContainer>
@@ -231,6 +232,7 @@ function App(){
         <List>All other live cells die in the next generation. Similarly, all other dead cells stay dead.</List>
       </ul>
       </RulesContainer>
+      
 
       <Heading> Preset Designs </Heading>
 
@@ -279,8 +281,8 @@ function App(){
 
 
     </div>
+    
       <div>
-        
         <GenCounter> <Heading> Generation : {gen} </Heading>  </GenCounter>
       <div>
 
@@ -340,14 +342,30 @@ function App(){
           </div>
 
           </div>
+          <div className="box">
+        <div className="perspective-text">
+        <div className="perspective-line">
+          <p></p>
+          <p>Conway's</p>
+        </div>
+        <div className="perspective-line">
+          <p>Conway's</p>
+          <p>Game Of</p>
+        </div>
+        <div className="perspective-line">
+          <p>Game Of</p>
+          <p>Life</p>
+        </div>
+        <div className="perspective-line">
+          <p>Life</p>
+          
+        </div>
+      </div>
+    </div>
         </Contaier>
-
-
-
-
-    
-
       </Background>
+      
+      </>
     )
   
 }
