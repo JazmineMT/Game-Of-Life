@@ -1,5 +1,10 @@
-import React, { useCallback, useState, useRef , useEffect} from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import produce from 'immer';
+import {Contaier, Heading, ButtonContainer, GenCounter, GifContainer, RulesContainer, PresetContainer, Background, GridContainer, List,  ExtraGifContainer} from './styles/styles'
+import glider from './glider.gif'
+import column from './column.gif'
+import toad from './toad.gif'
+import './App.scss';
 
 
 const numRows = 25
@@ -16,9 +21,7 @@ const operations = [
   [-1, 1]
 ]
 
-const color = {
-  color : '	#000000'
-}
+
 
 const generateEmptyGrid = () => {
 
@@ -42,11 +45,14 @@ function App(){
     })
   const [gen, setGen] = useState(0)  
   const [running , setRunning] = useState(false)
-  const [colors , setColors] = useState(color.color)
+  const [colors , setColors] = useState('#000000')
   
   const runningRef = useRef(running);
 
    runningRef.current = running
+
+  const genRef = useRef(gen);
+  genRef.current = gen
   
   
   const runSimulation = useCallback(()=> {
@@ -74,7 +80,6 @@ function App(){
               gridCopy[i][k] = 0;
 
             } else if(g[i][k]=== 0 && neighbors === 3){
-              setGen(gen+1)
               gridCopy[i][k] = 1;
             }
     
@@ -84,10 +89,10 @@ function App(){
       })
 
     })
-
+    setGen(genRef.current + 1);
     setTimeout(runSimulation, 1000);
     
-  }, [])
+  }, []);
 
 
   const generateGlider = () => {
@@ -212,59 +217,74 @@ function App(){
      
 
   return (
+    <Background>
+     <div className="head" >
+     <p> Conway's Game of Life </p>
+    </div> 
+    <Contaier>
+    <div>
+      <RulesContainer>
+      <Heading>Rules</Heading>
+      <ul>
+        <List>Any live cell with two or three live neighbours survives.</List>
+        <List>Any dead cell with three live neighbours becomes a live cell.</List>
+        <List>All other live cells die in the next generation. Similarly, all other dead cells stay dead.</List>
+      </ul>
+      </RulesContainer>
 
-    <>
-      <button onClick={() => {
-        setRunning(!running)
-        runningRef.current = true
-        runSimulation()
-      }}> {running? "stop": "start" }</button>
+      <Heading> Preset Designs </Heading>
 
-    
-      <button onClick={() => {
-        setColors('#000000')
-        setGen(0)
-        setGrid(generateEmptyGrid)
+      <PresetContainer>
 
-      }}> Clear</button>
+      
 
-      <button 
-      onClick={() => {
-        setColors(getRandomColor())
-      }}>
-        Random Color 
-      </button>
+        <GifContainer>
 
-      <button onClick={() => {
-         const rows = [];
-         for( let i = 0; i < numRows; i++){
-           rows.push(Array.from(Array(numCols), () => Math.random() > .7 ? 1: 0))
-       
-           }  
-           setGrid(rows)
-       
-      }}> Random </button>
+          <img src={glider} alt="thumbnail"/>
+        </GifContainer>
+        <GifContainer>
+      
 
-      <button onClick={() =>{
-        generateGlider()
-      }}>Glider</button>
+          <button className="btn cta bg"  onClick={() =>{
+            generateGlider()
+          }}>Glider</button>
 
-      <button onClick={() =>{
-        generateToad()
-      }}>Toad</button>
+        </GifContainer>
+        
+        <GifContainer>
+
+        <img src={toad} alt="thumbnail"/>
+        </GifContainer>
+        <GifContainer>
+
+          <button className="btn cta bg" onClick={() =>{
+            generateToad()
+          }}>Toad</button>
+
+        </GifContainer>
+
+        </PresetContainer>
+        <PresetContainer>
+        <ExtraGifContainer>
+
+        <img src={column} alt="thumbnail"/>
 
 
-      <button onClick={() =>{
-        generatePentadecathlon()
-      }}>Pentadecathlon</button>
+
+          <button className="btn cta bg" onClick={() =>{
+            generatePentadecathlon()
+          }}>Pentadecathlon</button>
+        </ExtraGifContainer>
+        </PresetContainer>
 
 
-    <div> Generation : {gen}</div>
+    </div>
+      <div>
+        
+        <GenCounter> <Heading> Generation : {gen} </Heading>  </GenCounter>
+      <div>
 
-
-    
-
-      <div style={{
+      <GridContainer style={{
         display:'inline-grid',
         gridTemplateColumns: `repeat(${numCols}, 20px)`
       }}> {grid.map((rows, i) => 
@@ -282,8 +302,52 @@ function App(){
                   backgroundColor: grid[i][k] ? `${colors}` : undefined, 
                   border: "solid 1px black",
                   borderRadius: '0px' }}   />))} 
+          </GridContainer>
+          <ButtonContainer>
+          <button className="btn cta bg" onClick={() => {
+            setRunning(!running)
+            runningRef.current = true
+            runSimulation()
+          }}> {running? "stop": "start" }</button>
+
+        
+          <button  className="btn cta bg" onClick={() => {
+            setColors('#000000')
+            setGen(0)
+            setGrid(generateEmptyGrid)
+
+          }}> Clear</button>
+          </ButtonContainer>
+          <ButtonContainer>
+          <button className="btn cta bg" onClick={() => {
+            const rows = [];
+            for( let i = 0; i < numRows; i++){
+              rows.push(Array.from(Array(numCols), () => Math.random() > .7 ? 1: 0))
+          
+              }  
+              setGrid(rows)
+          
+          }}> Random Grid </button>
+
+            <button className="btn cta bg " 
+            onClick={() => {
+              setColors(getRandomColor())
+            }}>
+              Random Color 
+            </button>
+          </ButtonContainer>
+
           </div>
-    </>
+
+          </div>
+        </Contaier>
+
+
+
+
+    
+
+      </Background>
     )
   
 }
