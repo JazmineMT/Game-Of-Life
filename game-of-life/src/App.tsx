@@ -227,6 +227,9 @@ function App(){
       <RulesContainer>
       <Heading>Rules</Heading>
       <ul>
+        <List>Click anywhere on the board to create a pattern.</List>
+        <List>Click start to begin call automation.</List>
+        <List>You can randomize the grid patter or grid color.</List>
         <List>Any live cell with two or three live neighbours survives.</List>
         <List>Any dead cell with three live neighbours becomes a live cell.</List>
         <List>All other live cells die in the next generation. Similarly, all other dead cells stay dead.</List>
