@@ -22,7 +22,7 @@ Conway's game of life is a zero player game which uses an algorithm to create a 
 
 Here is a snap shot of the deloyed site. This was built in React and styled with SASS and styled-components. The grid is controled my a toggled start/stop button and a clear button the restart the grid. Each time the cells morph there is a cell genration counter that is displayed at the top of the page.
 
-[<img src="game-of-life\src\pics\deployed_screen_shot.jpg" width = "200" />]
+[<img src="game-of-life\src\pics\deployed_screen_shot.jpg" width = "400" />]
 
 
 
@@ -34,7 +34,7 @@ Here is a snap shot of the deloyed site. This was built in React and styled with
 
 One feature of this project is having prefilled deisgns that a player can select. Each of these buttons can be pressed and the shap will appear on the grid. Each one has it's one characterists of how it moves and is desplayed by clicked start.
 
-[<img src="game-of-life\src\pics\preset_designs.jpg" width = "200" />]
+[<img src="game-of-life\src\pics\preset_designs.jpg" width = "400" />]
 
 
 ### Random Grid
